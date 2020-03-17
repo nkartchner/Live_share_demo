@@ -1,0 +1,5 @@
+STEP 1) create our folder structure. Include npx create-react-app command
+STEP 2) Create our model(s).
+STEP 3) Create the model controller methods
+STEP 4) Create the model routes
+STEP 5) 
