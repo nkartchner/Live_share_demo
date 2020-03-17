@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+// TODO get "Better Comments";
+// ! OMG EMERGENCY
+// ? do i need something here????
+
+const INITIAL_FORM_STATE = {
+  title: "",
+  price: "",
+  description: "",
+  submitted: false
+};
+
 const ProductForm = props => {
-  const [formState, setFormState] = useState({
-    title: "",
-    price: "",
-    description: "",
-    submitted: false
-  });
+  const [formState, setFormState] = useState(INITIAL_FORM_STATE);
 
   const onChangeHandler = event => {
     event.preventDefault();
@@ -18,8 +24,16 @@ const ProductForm = props => {
     });
   };
 
+  // TODO Clear Form when submitted - Millie
+  // TODO Show submit confirmation - Morgan
+
   const onSubmitHandler = e => {
     e.preventDefault();
+
+    setFormState({
+      ...INITIAL_FORM_STATE,
+      submitted: true
+    });
 
     axios
       .post("http://localhost:8000/api/product/new", {
@@ -33,12 +47,17 @@ const ProductForm = props => {
 
   return (
     <div>
-      {}
+      {formState.submitted && "Your product has been successfully submitted!"}
       <form onSubmit={onSubmitHandler}>
         <br />
         <label>
           Title
-          <input type="text" name="title" onChange={onChangeHandler} />
+          <input
+            type="text"
+            name="title"
+            onChange={onChangeHandler}
+            value={formState.title}
+          />
         </label>
         <br />
         {formState.title.length > 0 && formState.title.length < 2 && (
@@ -46,13 +65,22 @@ const ProductForm = props => {
         )}
         <label>
           Price
-          <input type="number" name="price" onChange={onChangeHandler} />
+          <input
+            type="number"
+            name="price"
+            onChange={onChangeHandler}
+            value={formState.price}
+          />
         </label>
         <br />
         {isNaN(formState.price) && <span>Price must be a number</span>}
         <label>
           Description
-          <textarea name="description" onChange={onChangeHandler}></textarea>
+          <textarea
+            name="description"
+            onChange={onChangeHandler}
+            value={formState.description}
+          ></textarea>
         </label>
         <br />
         {formState.description.length > 0 &&
